@@ -4,8 +4,8 @@ export default function TakeComments(props) {
   const [comment, setComment] = useState({ name: "", comment: "" });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log("name:", name);
-    console.log("value:", value);
+    // console.log("name:", name);
+    // console.log("value:", value);
     setComment({
       ...comment,
       [name]: value,
@@ -16,6 +16,7 @@ export default function TakeComments(props) {
       <div className="user-name">
         <label>Name</label>
         <input
+          key={`userName`}
           name="name"
           value={comment.name}
           placeholder="Enter Your Name"
@@ -26,6 +27,7 @@ export default function TakeComments(props) {
         <label>comment</label>
         <div>
           <textarea
+            key={`userComment`}
             name="comment"
             value={comment.comment}
             rows="5"
@@ -44,7 +46,7 @@ export default function TakeComments(props) {
                 setComment((comment.name = name));
               }
               let copyUserComment = [...props.userComment];
-              copyUserComment.push(comment);
+              copyUserComment.unshift(comment);
               props.setUserComment(copyUserComment);
               setComment({ name: "", comment: "" });
             }}

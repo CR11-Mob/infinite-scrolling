@@ -1,6 +1,6 @@
 export default function ShowComments(props) {
-  return props.userComment.map((item) => (
-    <div className="comment">
+  return props.userComment.map((item, index) => (
+    <div key={`newComment${index}`} className="comment">
       <div>
         <b>Name:</b>
         {`    ${item.name}`}

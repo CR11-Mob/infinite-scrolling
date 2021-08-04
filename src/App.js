@@ -3,20 +3,43 @@ import Text from "./components/Text";
 import TakeComments from "./components/TakeComments";
 import ShowComments from "./components/ShowComments";
 
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useRef, useContext } from "react";
+const comments = [
+  { name: "EveryBody", comment: "Oi, teme!" },
+  { name: "NoBody", comment: "Hey, this is my first comment in here." },
+  { name: "SomeBody", comment: "Hey, this is not my first comment in here." },
+];
 function App() {
-  const [userComment, setUserComment] = useState([
-    { name: "NoBody", comment: "Hey, this is my first comment in here." },
-    { name: "SomeBody", comment: "Hey, this is not my first comment in here." },
-    { name: "EveryBody", comment: "Oi, teme!" },
-  ]);
+  const [userComment, setUserComment] = useState([]);
 
   useEffect(() => {
     console.log("User Comment:", userComment);
   }, [userComment]);
+
+  const listInnerRef = useRef();
+
+  const onScroll = () => {
+    // console.log("onscroll");
+    if (listInnerRef.current) {
+      // console.log(listInnerRef.current);
+      const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+      if (scrollTop + clientHeight === scrollHeight) {
+        // TO SOMETHING HERE
+        console.log("Reached bottom");
+
+        let userCommentCopy = [...userComment];
+
+        setUserComment(userCommentCopy.concat(comments));
+      }
+    }
+  };
   return (
-    <div className="container">
+    <div
+      className="container"
+      onScroll={() => onScroll()}
+      ref={listInnerRef}
+      style={{ overflow: "scroll", height: "100vh" }}
+    >
       <main className="main-content">
         <div className="article-section">
           <div className="img-container">
